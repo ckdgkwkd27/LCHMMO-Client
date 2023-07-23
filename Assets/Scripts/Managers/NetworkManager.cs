@@ -4,6 +4,7 @@ using Google.Protobuf;
 using System.Net;
 using ServerCore;
 using System;
+using Unity.VisualScripting;
 
 public class NetworkManager
 {
@@ -17,9 +18,9 @@ public class NetworkManager
     public void Init()
     {
         string host = Dns.GetHostName();
-        IPHostEntry ipHost = Dns.GetHostEntry(host);
-        IPAddress ipAddr = ipHost.AddressList[0];
+        IPAddress ipAddr = IPAddress.Parse("127.0.0.1");
         IPEndPoint endPoint = new IPEndPoint(ipAddr, 7777);
+        UnityEngine.Debug.Log($"IP: {ipAddr.ToString()}");
 
         Connector connector = new Connector();
         connector.Connect(endPoint, () => { return _session; }, 1);

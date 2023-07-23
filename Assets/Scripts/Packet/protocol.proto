@@ -1,0 +1,41 @@
+syntax = "proto3";
+package protocol;
+
+message RequestLogin
+{
+	string id = 1;
+	string password = 2;
+}
+
+message ReturnLogin
+{
+	bool success = 1;
+	uint64 playerId = 2;
+}
+
+message RequestEnterGame
+{
+	uint64 playerId = 1;
+}
+
+message ReturnEnterGame
+{
+	uint64 actorId = 1;
+	uint64 playerId = 2;
+}
+
+message RequestChat
+{
+	string msg = 1;
+}
+
+message ReturnChat
+{
+	uint64 playerId = 1;
+	string msg = 2;
+}
+
+message RequestMove
+{
+
+}

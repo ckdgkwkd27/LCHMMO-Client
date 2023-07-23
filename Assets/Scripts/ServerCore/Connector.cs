@@ -34,7 +34,10 @@ namespace ServerCore
 
             bool pending = socket.ConnectAsync(args);
             if (pending == false)
+            {
+                Debug.LogError($"Pending False");
                 OnConnectCompleted(null, args);
+            }
         }
 
         void OnConnectCompleted(object sender, SocketAsyncEventArgs args)
@@ -47,7 +50,7 @@ namespace ServerCore
             }
             else
             {
-                Debug.Log($"OnConnectCompleted Fail: {args.SocketError}");
+                Debug.LogError($"OnConnectCompleted Fail: {args.SocketError}");
             }
         }
     }
