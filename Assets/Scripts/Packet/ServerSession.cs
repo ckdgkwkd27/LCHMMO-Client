@@ -5,8 +5,21 @@ using ServerCore;
 using System.Net;
 using Unity.VisualScripting;
 
+enum SessionState
+{
+    NONE,
+    CONNECTED,
+    LOGIN,
+    ENTER_GAME,
+
+    END
+};
+
 public class ServerSession : Session
 {
+    public SessionState sessionState;
+    public ulong playerId;
+
     public void Send(IMessage packet)
     {
         string msgName = packet.Descriptor.Name.Replace("_", string.Empty);
@@ -22,6 +35,7 @@ public class ServerSession : Session
     public override void OnConnected(EndPoint endPoint)
     {
         Debug.Log($"OnConnected: {endPoint}");
+        sessionState = SessionState.CONNECTED;
 
         PacketManager.Instance.CustomHandler = (s, m, i) =>
         {
