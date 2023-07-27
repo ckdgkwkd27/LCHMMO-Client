@@ -5,7 +5,7 @@ using ServerCore;
 using System.Net;
 using Unity.VisualScripting;
 
-enum SessionState
+public enum SessionState
 {
     NONE,
     CONNECTED,

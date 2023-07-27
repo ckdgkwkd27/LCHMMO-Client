@@ -3,9 +3,7 @@ using Protocol;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using UnityEngine;
 
 class PacketHandler
 {
@@ -14,7 +12,7 @@ class PacketHandler
         ReturnLogin returnLogin = packet as ReturnLogin;
         if (session.sessionState != SessionState.CONNECTED)
         {
-            Debug.LogError("Current State is Not Connected!");
+            UnityEngine.Debug.LogError("Current State is Not Connected!");
             return;
         }
 
@@ -31,7 +29,7 @@ class PacketHandler
 
         if(session.sessionState != SessionState.LOGIN)
         {
-            Debug.LogError("Current State is Not Logged In!");
+            UnityEngine.Debug.LogError("Current State is Not Logged In!");
             return;
         }
 
