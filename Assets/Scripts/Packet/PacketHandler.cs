@@ -20,6 +20,9 @@ class PacketHandler
         {
             session.sessionState = SessionState.LOGIN;
             session.playerId = returnLogin.PlayerId;
+
+            //#TODO
+            //Player 버튼 UI를 띄운다
         }
     }
 
