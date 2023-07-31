@@ -10,15 +10,8 @@ class PacketHandler
     public static void HandleReturnLogin(ServerSession session, IMessage packet)
     {
         ReturnLogin returnLogin = packet as ReturnLogin;
-        if (session.sessionState != SessionState.CONNECTED)
-        {
-            UnityEngine.Debug.LogError("Current State is Not Connected!");
-            return;
-        }
-
         if (returnLogin.Success)
         {
-            session.sessionState = SessionState.LOGIN;
             session.playerId = returnLogin.PlayerId;
 
             //#TODO
@@ -29,12 +22,6 @@ class PacketHandler
     public static void HandleReturnEnterGame(ServerSession session, IMessage packet) 
     { 
         ReturnEnterGame returnEnterGame = packet as ReturnEnterGame;
-
-        if(session.sessionState != SessionState.LOGIN)
-        {
-            UnityEngine.Debug.LogError("Current State is Not Logged In!");
-            return;
-        }
 
         //내가 스폰되었다
         if (session.playerId == returnEnterGame.PlayerId)

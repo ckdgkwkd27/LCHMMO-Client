@@ -4,26 +4,17 @@ using UnityEngine;
 using ServerCore;
 using System.Net;
 using Unity.VisualScripting;
-
-public enum SessionState
-{
-    NONE,
-    CONNECTED,
-    LOGIN,
-    ENTER_GAME,
-
-    END
-};
+using System.Collections.Generic;
 
 public class ServerSession : Session
 {
-    public SessionState sessionState;
     public ulong playerId;
 
     public void Send(IMessage packet)
     {
         string msgName = packet.Descriptor.Name.Replace("_", string.Empty);
-        PacketID msgId = (PacketID)Enum.Parse(typeof(PacketID), msgName);
+        PacketID msgId = Util.MessageToID(msgName);
+        Debug.Log($"msgId = {msgId}");
         ushort size = (ushort)packet.CalculateSize();
         byte[] sendBuffer = new byte[size + 4];
         Array.Copy(BitConverter.GetBytes((ushort)(size + 4)), 0, sendBuffer, 0, sizeof(ushort));
@@ -35,7 +26,6 @@ public class ServerSession : Session
     public override void OnConnected(EndPoint endPoint)
     {
         Debug.Log($"OnConnected: {endPoint}");
-        sessionState = SessionState.CONNECTED;
 
         PacketManager.Instance.CustomHandler = (s, m, i) =>
         {
@@ -50,12 +40,11 @@ public class ServerSession : Session
 
     public override int OnRecv(ArraySegment<byte> buffer)
     {
-        int processLen = 0;
-        return processLen;
+        PacketManager.Instance.OnRecvPacket(this, buffer);
+        return 0;
     }
 
     public override void OnSend(int numOfBytes)
     {
-        throw new NotImplementedException();
     }
 }

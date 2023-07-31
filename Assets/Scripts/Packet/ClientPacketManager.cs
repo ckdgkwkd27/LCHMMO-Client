@@ -7,14 +7,16 @@ using Google.Protobuf;
 using Unity.VisualScripting;
 using UnityEngine.XR;
 
-enum PacketID
+public enum PacketID
 {
     PKT_CS_LOGIN = 1,
     PKT_SC_LOGIN,
     PKT_CS_ENTER_GAME,
     PKT_SC_ENTER_GAME,
     PKT_CS_CHAT,
-    PKT_SC_CHAT
+    PKT_SC_CHAT,
+
+    PKT_ERROR,
 };
 
 class PacketManager
