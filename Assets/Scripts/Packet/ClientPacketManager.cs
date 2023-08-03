@@ -53,6 +53,8 @@ class PacketManager
         ushort id = BitConverter.ToUInt16(buffer.Array, buffer.Offset + count);
         count += 2;
 
+        UnityEngine.Debug.Log($"OnRecvPacket ID={id}");
+
         Action<ServerSession, ArraySegment<byte>, ushort> action = null;
         if (_onRecv.TryGetValue(id, out action))
             action.Invoke(session, buffer, id);

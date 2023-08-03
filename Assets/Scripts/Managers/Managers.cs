@@ -12,9 +12,11 @@ public class Managers : MonoBehaviour
 
     //MapManager _map = new MapManager();
     NetworkManager _network = new NetworkManager();
+    UIManager _ui = new UIManager();
 
     //public static MapManager Map { get { return Instance._map; } }
     public static NetworkManager Network { get { return Instance._network; } }
+    public static UIManager UI { get { return Instance._ui; } }
 
     void Start()
     {

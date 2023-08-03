@@ -22,7 +22,7 @@ namespace ServerCore
 
         public ArraySegment<byte> ReadSegment
         {
-            get { return new ArraySegment<byte>(_buffer.Array, _buffer.Offset, DataSize); }
+            get { return new ArraySegment<byte>(_buffer.Array, _buffer.Offset + _readPos, DataSize); }
         }
 
         public ArraySegment<byte> WriteSegment

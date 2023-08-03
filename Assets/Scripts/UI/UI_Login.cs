@@ -10,13 +10,15 @@ public class UI_Login : MonoBehaviour
     public TMP_InputField pwField;
     public Button joinButton;
     public Button loginButton;
-    private UnityAction action;
+    public Button playButton;
+    public TMP_Text StateText;
 
     public void Start()
     {
         var canvas = GameObject.Find("Canvas");
         idField = canvas.transform.Find("IdInput").GetComponent<TMP_InputField>();
         pwField = canvas.transform.Find("PwInput").GetComponent<TMP_InputField>();
+        //StateText = canvas.transform.Find("StateText").GetComponent<TMP_Text>();
     }
 
     public void OnJoinButtonClick()
@@ -36,5 +38,17 @@ public class UI_Login : MonoBehaviour
         requestLogin.Id = id;
         requestLogin.Password = pw;
         Managers.Network.Send(requestLogin);
+    }
+
+    public void OnPlayButtonClick()
+    {
+        if(Util._networkState == Util.NetworkState.LOGIN)
+        {
+            Debug.Log("INFO: GamePlay Start!");
+
+            RequestEnterGame enterGame = new RequestEnterGame();
+            enterGame.PlayerId = Util.playerId;
+            Managers.Network.Send(enterGame);
+        }
     }
 }

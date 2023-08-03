@@ -26,6 +26,7 @@ public class ServerSession : Session
     public override void OnConnected(EndPoint endPoint)
     {
         Debug.Log($"OnConnected: {endPoint}");
+        Util._networkState = Util.NetworkState.CONNECTED;
 
         PacketManager.Instance.CustomHandler = (s, m, i) =>
         {

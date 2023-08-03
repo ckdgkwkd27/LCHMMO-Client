@@ -2,7 +2,6 @@
 using Protocol;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
 class PacketHandler
@@ -13,30 +12,27 @@ class PacketHandler
         if (returnLogin.Success)
         {
             session.playerId = returnLogin.PlayerId;
-
-            //#TODO
-            //Player 버튼 UI를 띄운다
+            Util._networkState = Util.NetworkState.LOGIN;
+            Util.playerId = session.playerId;
+            Debug.Log($"LoginSuccess!! playerId={session.playerId}");
         }
     }
 
     public static void HandleReturnEnterGame(ServerSession session, IMessage packet) 
-    { 
+    {
+        Debug.Log("HandleReturnEnterGame()");
         ReturnEnterGame returnEnterGame = packet as ReturnEnterGame;
 
         //내가 스폰되었다
-        if (session.playerId == returnEnterGame.PlayerId)
+        if (Util.playerId == returnEnterGame.PlayerId)
         {
-            /* <Plan>
-             * UI 만들어서 그걸로 RequestLogin Packet 보내기
-             * Actor Pool 만들어서 Object Pooling 하기
-             * Player Spawn 구현 이후 Moving
-            */
+            Debug.Log("Return Enter Game!");
         }
 
         //남이 스폰되었다
         else
         {
-
+            Debug.Log($"ME={Util.playerId} and packet.playerId={returnEnterGame.PlayerId}");
         }
     }
 
