@@ -1,8 +1,8 @@
 ﻿using Google.Protobuf;
 using Protocol;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 class PacketHandler
 {
@@ -14,25 +14,28 @@ class PacketHandler
             session.playerId = returnLogin.PlayerId;
             Util._networkState = Util.NetworkState.LOGIN;
             Util.playerId = session.playerId;
-            Debug.Log($"LoginSuccess!! playerId={session.playerId}");
+            Debug.Log($"Login Success!! playerId={session.playerId}");
         }
     }
 
     public static void HandleReturnEnterGame(ServerSession session, IMessage packet) 
     {
-        Debug.Log("HandleReturnEnterGame()");
         ReturnEnterGame returnEnterGame = packet as ReturnEnterGame;
 
         //내가 스폰되었다
-        if (Util.playerId == returnEnterGame.PlayerId)
+        if (Util.actorId == returnEnterGame.ActorId)
         {
-            Debug.Log("Return Enter Game!");
+            Debug.Log($"EnterGame Success!, ActorID={returnEnterGame.ActorId}, ZoneID={returnEnterGame.ZoneId}, PosX={returnEnterGame.PosX}," +
+                $"PosY={returnEnterGame.PosY}");
+
+            Managers.Clear();
+            SceneManager.LoadScene("SampleScene");
         }
 
         //남이 스폰되었다
         else
         {
-            Debug.Log($"ME={Util.playerId} and packet.playerId={returnEnterGame.PlayerId}");
+            Debug.Log($"ME={Util.actorId} and packet.playerId={returnEnterGame.ActorId}");
         }
     }
 

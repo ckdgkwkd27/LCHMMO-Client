@@ -3,7 +3,6 @@ using Google.Protobuf;
 using UnityEngine;
 using ServerCore;
 using System.Net;
-#define max 100
 
 public class ServerSession : Session
 {
@@ -13,7 +12,7 @@ public class ServerSession : Session
     {
         string msgName = packet.Descriptor.Name.Replace("_", string.Empty);
         PacketID msgId = Util.MessageToID(msgName);
-        Debug.Log($"msgId = {msgId}");
+        //Debug.Log($"msgId = {msgId}");
         ushort size = (ushort)packet.CalculateSize();
         byte[] sendBuffer = new byte[size + 4];
         Array.Copy(BitConverter.GetBytes((ushort)(size + 4)), 0, sendBuffer, 0, sizeof(ushort));
@@ -51,8 +50,7 @@ public class ServerSession : Session
             if (buffer.Count < dataSize)
                 break;
 
-            OnRecvPacket(new ArraySegment<byte>(buffer.Array, buffer.Offset, dataSize));
-
+            PacketManager.Instance.OnRecvPacket(this, new ArraySegment<byte>(buffer.Array, buffer.Offset, dataSize));
             processLen += dataSize;
             buffer = new ArraySegment<byte>(buffer.Array, buffer.Offset + dataSize, buffer.Count - dataSize);
         }
