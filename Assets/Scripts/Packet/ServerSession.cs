@@ -3,8 +3,7 @@ using Google.Protobuf;
 using UnityEngine;
 using ServerCore;
 using System.Net;
-using Unity.VisualScripting;
-using System.Collections.Generic;
+#define max 100
 
 public class ServerSession : Session
 {
@@ -41,8 +40,24 @@ public class ServerSession : Session
 
     public override int OnRecv(ArraySegment<byte> buffer)
     {
-        PacketManager.Instance.OnRecvPacket(this, buffer);
-        return 0;
+        int processLen = 0;
+
+        while(true)
+        {
+            if (buffer.Count < sizeof(ushort))
+                break;
+
+            ushort dataSize = BitConverter.ToUInt16(buffer.Array, buffer.Offset);
+            if (buffer.Count < dataSize)
+                break;
+
+            OnRecvPacket(new ArraySegment<byte>(buffer.Array, buffer.Offset, dataSize));
+
+            processLen += dataSize;
+            buffer = new ArraySegment<byte>(buffer.Array, buffer.Offset + dataSize, buffer.Count - dataSize);
+        }
+
+        return processLen;
     }
 
     public override void OnSend(int numOfBytes)
