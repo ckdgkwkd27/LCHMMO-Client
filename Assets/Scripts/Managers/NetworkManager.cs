@@ -19,8 +19,8 @@ public class NetworkManager
     {
         string host = Dns.GetHostName();
         IPAddress ipAddr = IPAddress.Parse("127.0.0.1");
-        IPEndPoint endPoint = new IPEndPoint(ipAddr, 7777);
-        UnityEngine.Debug.Log($"IP: {ipAddr.ToString()}");
+        IPEndPoint endPoint = new IPEndPoint(ipAddr, 8888);
+        UnityEngine.Debug.Log($"IP: {ipAddr}");
 
         Connector connector = new Connector();
         connector.Connect(endPoint, () => { return _session; }, 1);

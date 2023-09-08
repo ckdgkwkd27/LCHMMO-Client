@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.Managers
+public class Poolable : MonoBehaviour
 {
-    internal class Poolable
-    {
-    }
+    public bool IsUsing;
 }

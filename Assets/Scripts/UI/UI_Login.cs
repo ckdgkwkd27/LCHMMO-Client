@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
 using Protocol;
+using ServerCore;
 
 public class UI_Login : MonoBehaviour
 {
@@ -38,17 +39,5 @@ public class UI_Login : MonoBehaviour
         requestLogin.Id = id;
         requestLogin.Password = pw;
         Managers.Network.Send(requestLogin);
-    }
-
-    public void OnPlayButtonClick()
-    {
-        if(Util._networkState == Util.NetworkState.LOGIN)
-        {
-            Debug.Log("INFO: GamePlay Start!");
-
-            RequestEnterGame enterGame = new RequestEnterGame();
-            enterGame.PlayerId = Util.playerId;
-            Managers.Network.Send(enterGame);
-        }
     }
 }

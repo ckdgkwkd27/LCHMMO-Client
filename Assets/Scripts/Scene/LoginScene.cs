@@ -6,6 +6,7 @@ public class LoginScene : BaseScene
     protected override void Init()
     {
         base.Init();
+        Screen.SetResolution(1280, 960, false);
     }
 
     public override void Clear()

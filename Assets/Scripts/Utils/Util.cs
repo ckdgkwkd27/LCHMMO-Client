@@ -12,8 +12,6 @@ public class Util
     }
 
     public static NetworkState _networkState = NetworkState.NONE;
-    public static ulong playerId;
-    public static ulong actorId;
 
     public static PacketID MessageToID(string msgName)
     {
@@ -27,7 +25,10 @@ public class Util
                 return PacketID.PKT_CS_ENTER_GAME;
             case "ReturnEnterGame":
                 return PacketID.PKT_SC_ENTER_GAME;
-
+            case "RequestMove":
+                return PacketID.PKT_CS_MOVE;
+            case "ReturnMove":
+                return PacketID.PKT_SC_MOVE;
             default:
                 return PacketID.PKT_ERROR;
         }

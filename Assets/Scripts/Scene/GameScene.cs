@@ -6,9 +6,7 @@ public class GameScene : BaseScene
     {
         base.Init();
         sceneType = SceneType.WORLD;
-        //Managers.Map.LoadMap(1);
-        var net = Managers.Network;
-        Screen.SetResolution(640, 480, false);
+        Screen.SetResolution(1280, 960, false);
     }
 
     public override void Clear()

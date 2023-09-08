@@ -13,10 +13,13 @@ public enum PacketID
     PKT_SC_LOGIN,
     PKT_CS_ENTER_GAME,
     PKT_SC_ENTER_GAME,
+    PKT_SC_SPAWN,
+    PKT_CS_MOVE,
+    PKT_SC_MOVE,
     PKT_CS_CHAT,
     PKT_SC_CHAT,
 
-    PKT_ERROR,
+    PKT_ERROR
 };
 
 class PacketManager
@@ -39,9 +42,10 @@ class PacketManager
         _handler.Add((ushort)PacketID.PKT_SC_LOGIN, PacketHandler.HandleReturnLogin);
         _onRecv.Add((ushort)PacketID.PKT_SC_ENTER_GAME, MakePacket<Protocol.ReturnEnterGame>);
         _handler.Add((ushort)(PacketID.PKT_SC_ENTER_GAME), PacketHandler.HandleReturnEnterGame);
-        _onRecv.Add((ushort)PacketID.PKT_SC_CHAT, MakePacket<Protocol.ReturnChat>);
-        _handler.Add((ushort)(PacketID.PKT_SC_CHAT), PacketHandler.HandleReturnChat);
-
+        _onRecv.Add((ushort)PacketID.PKT_SC_SPAWN, MakePacket<Protocol.NotifySpawn>);
+        _handler.Add((ushort)(PacketID.PKT_SC_SPAWN), PacketHandler.HandleNotifySpawn);
+        _onRecv.Add((ushort)(PacketID.PKT_SC_MOVE), MakePacket<Protocol.ReturnMove>);
+        _handler.Add((ushort)(PacketID.PKT_SC_MOVE), PacketHandler.HandleReturnMove);
     }
 
     public void OnRecvPacket(ServerSession session, ArraySegment<byte> buffer)
@@ -52,7 +56,7 @@ class PacketManager
         count += 2;
         ushort id = BitConverter.ToUInt16(buffer.Array, buffer.Offset + count);
         count += 2;
-
+        UnityEngine.Debug.Log($"PacketID={id}");
         Action<ServerSession, ArraySegment<byte>, ushort> action = null;
         if (_onRecv.TryGetValue(id, out action))
             action.Invoke(session, buffer, id);
